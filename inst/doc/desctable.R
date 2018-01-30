@@ -8,7 +8,7 @@ options(DT.options = list(#scrollX = T,
                           search = F,
                           dom = "Brtip",
                           fixedColumns = T))
-knitr::opts_chunk$set(message = F, warning = F)
+knitr::opts_chunk$set(message = F, warning = F, screenshot.force = F)
 
 ## ------------------------------------------------------------------------
 iris %>%

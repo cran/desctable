@@ -26,7 +26,7 @@ Desctable is a comprehensive descriptive and comparative tables generator for R.
 
 Every person doing data analysis has to create tables for descriptive summaries of data (a.k.a. Table.1), or comparative tables.
 
-Many packages, such as the aptly named **tableone**, adress this issue. However, they often include hard-coded behaviors, have outputs not easily manipulable with standard R tools, or their syntax are out-of-style (e.g. the argument order makes them difficult to use with the pipe (`%>%`)).
+Many packages, such as the aptly named **tableone**, address this issue. However, they often include hard-coded behaviors, have outputs not easily manipulable with standard R tools, or their syntax are out-of-style (e.g. the argument order makes them difficult to use with the pipe (`%>%`)).
 
 Enter **desctable**, a package built with the following objectives in mind:
 
@@ -41,6 +41,12 @@ Enter **desctable**, a package built with the following objectives in mind:
 
 Installation
 ============
+
+Install from CRAN with
+
+    install.packages("desctable")
+
+or install the development version from github with
 
     devtools::install_github("maximewack/desctable")
 
@@ -121,9 +127,9 @@ iris %>%
   pander
 ```
 
-<table style="width:63%;">
+<table style="width:90%;">
 <colgroup>
-<col width="20%" />
+<col width="48%" />
 <col width="5%" />
 <col width="12%" />
 <col width="6%" />
@@ -253,9 +259,9 @@ iris %>%
   pander
 ```
 
-<table style="width:63%;">
+<table style="width:90%;">
 <colgroup>
-<col width="20%" />
+<col width="48%" />
 <col width="5%" />
 <col width="12%" />
 <col width="6%" />
@@ -346,7 +352,7 @@ Statistical functions can be any function defined in R that you want to use, suc
 
 The only condition is that they return a single numerical value. One exception is when they return a vector of length `1 + nlevels(x)` when applied to factors, as is needed for the `percent` function.
 
-As mentionned above, they need to be used inside a named list, such as
+As mentioned above, they need to be used inside a named list, such as
 
 ``` r
 mtcars %>%
@@ -478,9 +484,9 @@ iris %>%
   pander
 ```
 
-<table style="width:51%;">
+<table style="width:79%;">
 <colgroup>
-<col width="20%" />
+<col width="48%" />
 <col width="5%" />
 <col width="12%" />
 <col width="12%" />
@@ -607,9 +613,9 @@ mtcars %>%
   pander
 ```
 
-<table style="width:75%;">
+<table style="width:89%;">
 <colgroup>
-<col width="33%" />
+<col width="47%" />
 <col width="5%" />
 <col width="12%" />
 <col width="6%" />
@@ -1034,19 +1040,19 @@ iris %>%
 
 <table style="width:100%;">
 <colgroup>
-<col width="8%" />
-<col width="14%" />
-<col width="7%" />
+<col width="17%" />
+<col width="12%" />
+<col width="6%" />
+<col width="4%" />
+<col width="5%" />
+<col width="5%" />
+<col width="12%" />
+<col width="6%" />
+<col width="4%" />
+<col width="5%" />
 <col width="5%" />
 <col width="6%" />
-<col width="6%" />
-<col width="13%" />
-<col width="7%" />
 <col width="5%" />
-<col width="6%" />
-<col width="6%" />
-<col width="7%" />
-<col width="6%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1727,19 +1733,19 @@ iris %>%
 
 <table style="width:100%;">
 <colgroup>
-<col width="8%" />
-<col width="14%" />
-<col width="7%" />
+<col width="17%" />
+<col width="12%" />
+<col width="6%" />
+<col width="4%" />
+<col width="5%" />
+<col width="5%" />
+<col width="12%" />
+<col width="6%" />
+<col width="4%" />
+<col width="5%" />
 <col width="5%" />
 <col width="6%" />
-<col width="6%" />
-<col width="13%" />
-<col width="7%" />
 <col width="5%" />
-<col width="6%" />
-<col width="6%" />
-<col width="7%" />
-<col width="6%" />
 </colgroup>
 <thead>
 <tr class="header">
