@@ -95,10 +95,10 @@ and columns (click on the footer to select columns), or \code{'cell'} to
 select cells}
 
 \item{extensions}{a character vector of the names of the DataTables
-extensions (\url{http://datatables.net/extensions/index})}
+extensions (\url{https://datatables.net/extensions/index})}
 
 \item{plugins}{a character vector of the names of DataTables plug-ins
-(\url{http://rstudio.github.io/DT/plugins.html})}
+(\url{https://rstudio.github.io/DT/plugins.html})}
 
 \item{rownames}{\code{TRUE} (show row names) or \code{FALSE} (hide row names)
 or a character vector of row names; by default, the row names are displayed

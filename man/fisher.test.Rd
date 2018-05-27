@@ -22,12 +22,15 @@ fisher.test(x, y, workspace, hybrid, control, or, alternative, conf.int,
 
 \item{workspace}{an integer specifying the size of the workspace
     used in the network algorithm.  In units of 4 bytes.  Only used for
-    non-simulated p-values larger than \eqn{2 \times 2}{2 by 2} tables.}
+    non-simulated p-values larger than \eqn{2 \times 2}{2 by 2} tables.
+    Since \R version 3.5.0, this also increases the internal stack size
+    which allows larger problems to be solved, however sometimes needing
+    hours.  In such cases, \code{simulate.p.values=TRUE} may be more
+    reasonable.}
 
 \item{hybrid}{a logical. Only used for larger than \eqn{2 \times 2}{2 by 2}
     tables, in which cases it indicates whether the exact probabilities
-    (default) or a hybrid approximation thereof should be computed.
-    See \sQuote{Details}.}
+    (default) or a hybrid approximation thereof should be computed.}
 
 \item{control}{a list with named components for low level algorithm
     control.  At present the only one used is \code{"mult"}, a positive
