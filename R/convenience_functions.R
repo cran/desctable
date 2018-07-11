@@ -7,8 +7,12 @@
 #' @return A nlevels(x) + 1 length vector of percentages
 percent <- function(x)
 {
-  c(NA, summary(x, maxsum = Inf) / length(x)) * 100
+  if (x %>% is.factor)
+    c(NA, summary(x, maxsum = Inf) / length(x)) * 100
+  else
+    NA
 }
+
 
 #' Return the inter-quartile range
 #'
@@ -20,6 +24,7 @@ IQR <- function(x)
 {
   base::diff(stats::quantile(x, c(0.25, 0.75), na.rm = T))
 }
+
 
 #' Test if distribution is normal
 #'
@@ -39,6 +44,7 @@ is.normal <- function(x)
   else
     F
 }
+
 
 #' Fisher's Exact Test for Count Data
 #'
@@ -190,8 +196,10 @@ fisher.test <- function(x, y, workspace, hybrid, control, or, alternative, conf.
   UseMethod("fisher.test")
 }
 
+
 #' @rdname fisher.test
 fisher.test.default <- function(x, ...) stats::fisher.test(x, ...)
+
 
 #' @rdname fisher.test
 fisher.test.formula <- function(x,
@@ -218,6 +226,7 @@ fisher.test.formula <- function(x,
                       simulate.p.value = simulate.p.value,
                       B = B)
 }
+
 
 #' Pearson's Chi-squared Test for Count Data
 #'
@@ -348,10 +357,12 @@ chisq.test <- function(x, y, correct, p, rescale.p, simulate.p.value, B)
   UseMethod("chisq.test")
 }
 
+
 #' @rdname chisq.test
 chisq.test.default <- stats::chisq.test
 
 #' @rdname chisq.test
+
 chisq.test.formula <- function(x,
                                y = NULL,
                                correct = T,
@@ -369,6 +380,7 @@ chisq.test.formula <- function(x,
                      B = B)
 }
 
+
 #' Wrapper for oneway.test(var.equal = T)
 #'
 #' @param formula An anova formula (\code{variable ~ grouping variable})
@@ -378,6 +390,7 @@ ANOVA <- function(formula)
 {
   stats::oneway.test(formula, var.equal = T)
 }
+
 
 #' No test
 #'

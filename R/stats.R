@@ -18,6 +18,7 @@ statify <- function(x, f)
   UseMethod("statify", f)
 }
 
+
 #' @rdname statify
 #' @export
 statify.default <- function(x, f)
@@ -26,8 +27,8 @@ statify.default <- function(x, f)
 
   # Try f(x), silent warnings and fail with NA
   res <- tryCatch(x %>% f,
-                  error = function(e) NA,
-                  warning = function(e) suppressWarnings(x %>% f))
+                  warning = function(e) suppressWarnings(x %>% f),
+                  error = function(e) NA)
 
   # If x is a factor and f(x) behaves as expected (nlevel + total value), return f(x), or apply f(x) on each level, or fail with n+1 NA
   # If it is a numeric, return f(x) if it behaves as expected (ONE value), or fail with NA
@@ -35,23 +36,24 @@ statify.default <- function(x, f)
   {
     if (length(res) == nlevels(x) + 1)
       res
-    else if (length(res) == 1 & res %>% is.numeric | res %>% is.na)
+    else if (length(res) == 1)
       c(res, lapply(levels(x), function(lvl)
                     {
                       tryCatch(f(x[x == lvl]),
-                               error = function(e) NA,
-                               warning = function(e) suppressWarnings(f(x[x == lvl])))
+                               warning = function(e) suppressWarnings(f(x[x == lvl])),
+                               error = function(e) NA)
                     }) %>% unlist)
     else
       rep(NA, nlevels(x) + 1)
   } else
   {
-    if (length(res) == 1 & res %>% is.numeric | res %>% is.na)
-      res %>% as.double
+    if (length(res) == 1)
+      res
     else
       NA
   }
 }
+
 
 #' @rdname statify
 #' @export
@@ -60,11 +62,11 @@ statify.formula <- function(x, f)
   # if expression quoted with ~, evaluate the expression
   if (length(f) == 2)
     eval(f[[2]])
-    # statify.default(x, eval(f[[2]]))
   # else parse the formula (cond ~ T | F)
   else
     statify.default(x, parse_formula(x, f))
 }
+
 
 #' Functions to create a list of statistics to use in desctable
 #'
@@ -72,9 +74,9 @@ statify.formula <- function(x, f)
 #'
 #' Already defined are
 #' \enumerate{
-#' \item stats_default with length, mean/\%, sd, med and IQR
-#' \item stats_normal with length, mean/\% and sd
-#' \item stats_nonnormal with length, median/\% and IQR
+#' \item stats_default with length, \%, mean, sd, med and IQR
+#' \item stats_normal with length, \%, mean and sd
+#' \item stats_nonnormal with length, %, median and IQR
 #' \item stats_auto, which picks stats depending of the data
 #' }
 #'
@@ -86,29 +88,35 @@ statify.formula <- function(x, f)
 stats_default <- function(data)
 {
   list("N" = length,
-       "Mean/%" = is.factor ~ percent | (is.normal ~ mean),
+       "%" = percent,
+       "Mean" = is.normal ~ mean,
        "sd" = is.normal ~ sd,
-       "Med" = is.normal ~ NA | median,
-       "IQR" = is.factor ~ NA | (is.normal ~ NA | IQR))
+       "Med" = stats::median,
+       "IQR" = is.factor ~ NA | IQR)
 }
+
 
 #' @rdname stats_default
 #' @export
 stats_normal <- function(data)
 {
   list("N" = length,
-       "Mean/%" = is.factor ~ percent | mean,
+       "%" = percent,
+       "Mean" = mean,
        "sd" = stats::sd)
 }
+
 
 #' @rdname stats_default
 #' @export
 stats_nonnormal <- function(data)
 {
   list("N" = length,
-       "Median/%" = is.factor ~ percent | median,
+       "%" = percent,
+       "Median" = stats::median,
        "IQR" = is.factor ~ NA | IQR)
 }
+
 
 #' @rdname stats_default
 #' @export
@@ -143,8 +151,8 @@ stats_auto <- function(data)
     list("N" = length,
          "Mean" = is.normal ~ mean,
          "sd" = is.normal ~ sd,
-         "Med" = is.normal ~ NA | median,
-         "IQR" = is.normal ~ NA | IQR)
+         "Med" = stats::median,
+         "IQR" = is.factor ~ NA | IQR)
   else if (!fact & normal & !nonnormal)
     list("N" = length,
          "Mean" = mean,

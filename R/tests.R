@@ -23,6 +23,7 @@ testify <- function(x, f, group)
                row.names = NULL, check.names = F, stringsAsFactors = F)
 }
 
+
 #' Functions to choose a statistical test
 #'
 #' These functions take a variable and a grouping variable as arguments, and return a statistcal test to use, expressed as a single-term formula.
@@ -39,7 +40,10 @@ tests_auto <- function(var, grp)
   if (nlevels(grp) < 2)
     ~no.test
   else if (var %>% is.factor)
-    ~fisher.test
+    if (tryCatch(fisher.test(var ~ grp)$p.value %>% is.numeric, error = function(e) F))
+      ~fisher.test
+    else
+      ~chisq.test
   else
   {
     all_normal <- all(var %>% tapply(grp, is.normal))
