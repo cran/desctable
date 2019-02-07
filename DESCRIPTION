@@ -1,6 +1,6 @@
 Package: desctable
 Title: Produce Descriptive and Comparative Tables Easily
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: person("Maxime", "Wack", email = "maximewack@free.fr", role = c("aut", "cre"))
 Description: Easily create descriptive and comparative tables.
     It makes use and integrates directly with the tidyverse family of packages, and pipes.
@@ -17,8 +17,8 @@ Suggests: knitr, rmarkdown, survival
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-07-11 15:00:17 UTC; maxx
+Packaged: 2019-02-07 14:51:48 UTC; maxx
 Author: Maxime Wack [aut, cre]
 Maintainer: Maxime Wack <maximewack@free.fr>
 Repository: CRAN
-Date/Publication: 2018-07-11 14:20:02 UTC
+Date/Publication: 2019-02-07 23:13:51 UTC
