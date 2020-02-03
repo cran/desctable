@@ -1,7 +1,8 @@
 Package: desctable
 Title: Produce Descriptive and Comparative Tables Easily
-Version: 0.1.6
-Authors@R: person("Maxime", "Wack", email = "maximewack@free.fr", role = c("aut", "cre"))
+Version: 0.1.7
+Authors@R: c(person("Maxime", "Wack", email = "maximewack@free.fr", role = c("aut", "cre")),
+             person("Adrien", "Boukobza", email = "hadrien_b@hotmail.fr", role = c("aut")))
 Description: Easily create descriptive and comparative tables.
     It makes use and integrates directly with the tidyverse family of packages, and pipes.
     Tables are produced as data frames/lists of data frames for easy manipulation after creation,
@@ -14,11 +15,12 @@ URL: https://github.com/maximewack/desctable
 BugReports: https://github.com/maximewack/desctable/issues
 Imports: dplyr, purrr, DT, htmltools, pander
 Suggests: knitr, rmarkdown, survival
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-04-01 16:39:44 UTC; maxx
-Author: Maxime Wack [aut, cre]
+Packaged: 2020-02-03 15:25:06 UTC; maxx
+Author: Maxime Wack [aut, cre],
+  Adrien Boukobza [aut]
 Maintainer: Maxime Wack <maximewack@free.fr>
 Repository: CRAN
-Date/Publication: 2019-04-01 17:10:02 UTC
+Date/Publication: 2020-02-03 16:20:06 UTC
