@@ -1,6 +1,4 @@
 ## ---- echo = F, message = F, warning = F--------------------------------------
-library(pander)
-library(DT)
 library(desctable)
 
 options(DT.options = list(#scrollX = T,
