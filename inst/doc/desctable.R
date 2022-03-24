@@ -10,140 +10,63 @@ knitr::opts_chunk$set(message = F, warning = F, screenshot.force = F)
 
 ## -----------------------------------------------------------------------------
 iris %>%
-  desctable()
-
-desctable(mtcars)
-
-## -----------------------------------------------------------------------------
-iris %>%
-  desctable() %>%
-  pander()
-
-mtcars %>%
-  desctable() %>%
-  datatable()
-
-## -----------------------------------------------------------------------------
-# Strictly equivalent to iris %>% desctable %>% datatable
-iris %>%
-  desctable(stats = stats_auto) %>%
-  datatable()
+  desc_table()
 
 ## -----------------------------------------------------------------------------
 mtcars %>%
-  desctable(stats = list("N" = length, "Mean" = mean, "SD" = sd)) %>%
-  datatable()
-
-## ---- eval = F----------------------------------------------------------------
-#  predicate_function ~ stat_function_if_TRUE | stat_function_if_FALSE
+  desc_table(N = length,
+             mean,
+             sd)
 
 ## -----------------------------------------------------------------------------
 iris %>%
-  desctable(stats = list("N"      = length,
-                         "%/Mean" = is.factor ~ percent | (is.normal ~ mean),
-                         "Median" = is.normal ~ NA | median)) %>%
-  datatable()
-
-## ---- echo = F----------------------------------------------------------------
-print(stats_auto)
-
-## -----------------------------------------------------------------------------
-mtlabels <- c(mpg  = "Miles/(US) gallon",
-              cyl  = "Number of cylinders",
-              disp = "Displacement (cu.in.)",
-              hp   = "Gross horsepower",
-              drat = "Rear axle ratio",
-              wt   = "Weight (1000 lbs)",
-              qsec = "¼ mile time",
-              vs   = "V/S",
-              am   = "Transmission",
-              gear = "Number of forward gears",
-              carb = "Number of carburetors")
-
-mtcars %>%
-  dplyr::mutate(am = factor(am, labels = c("Automatic", "Manual"))) %>%
-  desctable(labels = mtlabels) %>%
-  datatable()
+  desc_table(N = length,
+             "%" = percent,
+             Q1 = ~ quantile(., .25),
+             Med = median,
+             Q3 = ~ quantile(., .75))
 
 ## -----------------------------------------------------------------------------
 iris %>%
   group_by(Species) %>%
-  desctable() -> iris_by_Species
-
-iris_by_Species
-
-## -----------------------------------------------------------------------------
-str(iris_by_Species)
-
-## -----------------------------------------------------------------------------
-# With pander output
-mtcars %>%
-  group_by(cyl) %>%
-  desctable() %>%
-  pander()
-
-## -----------------------------------------------------------------------------
-# With datatable output
-iris %>%
-  group_by(Petal.Length > 5) %>%
-  desctable() %>%
-  datatable()
-
-## ---- message = F, warning = F------------------------------------------------
-mtcars %>%
-  dplyr::mutate(am = factor(am, labels = c("Automatic", "Manual"))) %>%
-  group_by(vs, am, cyl) %>%
-  desctable() %>%
-  datatable()
-
-## -----------------------------------------------------------------------------
-# Strictly equivalent to iris %>% group_by(Species) %>% desctable %>% datatable
-iris %>%
-  group_by(Species) %>%
-  desctable(tests = tests_auto) %>%
-  datatable()
-
-## -----------------------------------------------------------------------------
-iris %>%
-  group_by(Petal.Length > 5) %>%
-  desctable(tests = list(.auto   = tests_auto,
-                         Species = ~chisq.test)) %>%
-  datatable()
+  desc_table()
 
 ## -----------------------------------------------------------------------------
 mtcars %>%
-  dplyr::mutate(am = factor(am, labels = c("Automatic", "Manual"))) %>%
   group_by(am) %>%
-  desctable(tests = list(.default = ~wilcox.test,
-                         mpg      = ~t.test)) %>%
-  datatable()
+  desc_table() %>%
+  desc_output("df")
 
 ## -----------------------------------------------------------------------------
 mtcars %>%
-  desctable(stats = list("N"              = length,
-                         "Sum of squares" = function(x) sum(x^2),
-                         "Q1"             = . %>% quantile(prob = .25),
-                         "Q3"             = purrr::partial(quantile, probs = .75))) %>%
-  datatable()
+  group_by(am) %>%
+  desc_table() %>%
+  desc_output("pander")
+
+## -----------------------------------------------------------------------------
+mtcars %>%
+  group_by(am) %>%
+  desc_table() %>%
+  desc_output("DT")
 
 ## -----------------------------------------------------------------------------
 iris %>%
-  group_by(Species) %>%
-  desctable(tests = list(.auto = tests_auto,
-                         Sepal.Width = ~function(f) oneway.test(f, var.equal = F),
-                         Petal.Length = ~. %>% oneway.test(var.equal = T),
-                         Sepal.Length = ~purrr::partial(oneway.test, var.equal = T))) %>%
-  datatable()
+  group_by(Petal.Length > 5) %>%
+  desc_table() %>%
+  desc_tests() %>%
+  desc_output("DT")
 
 ## -----------------------------------------------------------------------------
-# This is a contrived example, which would be better solved with a dedicated function
-library(survival)
+iris %>%
+  group_by(Petal.Length > 5) %>%
+  desc_table(mean, sd, median, IQR) %>%
+  desc_tests(Sepal.Width = ~t.test) %>%
+  desc_output("DT")
 
-bladder$surv <- Surv(bladder$stop, bladder$event)
-
-bladder %>%
-  group_by(rx) %>%
-  desctable(tests = list(.default = ~wilcox.test,
-                         surv = ~. %>% survdiff %>% .$chisq %>% pchisq(1, lower.tail = F) %>% list(p.value = .))) %>%
-  datatable()
+## -----------------------------------------------------------------------------
+iris %>%
+  group_by(Petal.Length > 5) %>%
+  desc_table(mean, sd, median, IQR) %>%
+  desc_tests(Sepal.Width = ~t.test(., var.equal = T)) %>%
+  desc_output("DT")
 
