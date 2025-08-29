@@ -1,6 +1,6 @@
 Package: desctable
 Title: Produce Descriptive and Comparative Tables Easily
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(person("Maxime", "Wack", email = "maximewack@free.fr", role = c("aut", "cre")),
              person("Adrien", "Boukobza", email = "hadrien_b@hotmail.fr", role = c("aut")),
              person("Yihui", "Xie", email = "xieyihui@gmail.com", role = c("ctb")))
@@ -14,13 +14,13 @@ URL: https://desctable.github.io
 BugReports: https://github.com/desctable/desctable/issues
 Imports: dplyr, DT, htmltools, rlang, tidyr, utils
 Suggests: knitr, rmarkdown, purrr, survival
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-03-24 11:45:17 UTC; maxx
+Packaged: 2025-08-29 01:37:16 UTC; maxx
 Author: Maxime Wack [aut, cre],
   Adrien Boukobza [aut],
   Yihui Xie [ctb]
 Maintainer: Maxime Wack <maximewack@free.fr>
 Repository: CRAN
-Date/Publication: 2022-03-24 12:30:02 UTC
+Date/Publication: 2025-08-29 04:30:02 UTC

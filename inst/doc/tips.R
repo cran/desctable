@@ -1,4 +1,4 @@
-## ---- echo = F, message = F, warning = F--------------------------------------
+## ----echo = F, message = F, warning = F---------------------------------------
 library(desctable)
 
 ## -----------------------------------------------------------------------------
@@ -18,37 +18,37 @@ mtcars %>%
   desc_table(.labels = labels) %>%
   desc_output("DT")
 
-## ---- eval = F----------------------------------------------------------------
-#  stats_auto <- function(data) {
-#    data %>%
-#      lapply(is.numeric) %>%
-#      unlist() %>%
-#      any -> numeric
-#  
-#    data %>%
-#      lapply(is.factor) %>%
-#      unlist() %>%
-#      any() -> fact
-#  
-#    stats <- list("Min"  = min,
-#                  "Q1"   = ~quantile(., .25),
-#                  "Med"  = stats::median,
-#                  "Mean" = mean,
-#                  "Q3"   = ~quantile(., .75),
-#                  "Max"  = max,
-#                  "sd"   = stats::sd,
-#                  "IQR"  = IQR)
-#  
-#    if (fact & numeric)
-#      c(list("N" = length,
-#             "%" = percent),
-#        stats)
-#    else if (fact & !numeric)
-#      list("N" = length,
-#           "%" = percent)
-#    else if (!fact & numeric)
-#      stats
-#  }
+## ----eval = F-----------------------------------------------------------------
+# stats_auto <- function(data) {
+#   data %>%
+#     lapply(is.numeric) %>%
+#     unlist() %>%
+#     any -> numeric
+# 
+#   data %>%
+#     lapply(is.factor) %>%
+#     unlist() %>%
+#     any() -> fact
+# 
+#   stats <- list("Min"  = min,
+#                 "Q1"   = ~quantile(., .25),
+#                 "Med"  = stats::median,
+#                 "Mean" = mean,
+#                 "Q3"   = ~quantile(., .75),
+#                 "Max"  = max,
+#                 "sd"   = stats::sd,
+#                 "IQR"  = IQR)
+# 
+#   if (fact & numeric)
+#     c(list("N" = length,
+#            "%" = percent),
+#       stats)
+#   else if (fact & !numeric)
+#     list("N" = length,
+#          "%" = percent)
+#   else if (!fact & numeric)
+#     stats
+# }
 
 ## -----------------------------------------------------------------------------
 stats = list(N = length,
@@ -78,22 +78,22 @@ default_stats <- function(data)
        sd)
 }
 
-## ---- eval = F----------------------------------------------------------------
-#  tests_auto <- function(var, grp) {
-#    grp <- factor(grp)
-#  
-#    if (nlevels(grp) < 2)
-#      ~no.test
-#    else if (is.factor(var)) {
-#      if (tryCatch(is.numeric(fisher.test(var ~ grp)$p.value), error = function(e) F))
-#        ~fisher.test
-#      else
-#        ~chisq.test
-#    } else if (nlevels(grp) == 2)
-#      ~wilcox.test
-#    else
-#      ~kruskal.test
-#  }
+## ----eval = F-----------------------------------------------------------------
+# tests_auto <- function(var, grp) {
+#   grp <- factor(grp)
+# 
+#   if (nlevels(grp) < 2)
+#     ~no.test
+#   else if (is.factor(var)) {
+#     if (tryCatch(is.numeric(fisher.test(var ~ grp)$p.value), error = function(e) F))
+#       ~fisher.test
+#     else
+#       ~chisq.test
+#   } else if (nlevels(grp) == 2)
+#     ~wilcox.test
+#   else
+#     ~kruskal.test
+# }
 
 ## -----------------------------------------------------------------------------
 mtcars %>%
@@ -102,7 +102,7 @@ mtcars %>%
   desc_tests(.default = ~t.test) %>%
   desc_output("DT")
 
-## ---- warning = F-------------------------------------------------------------
+## ----warning = F--------------------------------------------------------------
 mtcars %>%
   group_by(am) %>%
   desc_table(mean, sd, median, IQR) %>%

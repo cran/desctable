@@ -1,4 +1,4 @@
-## ---- echo = F, message = F, warning = F--------------------------------------
+## ----echo = F, message = F, warning = F---------------------------------------
 library(desctable)
 
 options(DT.options = list(#scrollX = T,
